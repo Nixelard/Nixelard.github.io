@@ -17,7 +17,7 @@ const tasks = [
     {id: 170, name: "Entregables", start: "2026-04-15", end: "2026-04-15", phaseId: 50},
     {id: 179, name: "3. Fase Configuración y Pruebas", start: "2026-03-31", end: "2026-10-28", phase: true},
     {id: 180, name: "Gestión de datos para test", start: "2026-03-31", end: "2026-06-25", phaseId: 179},
-    {id: 188, name: "Configuración estandar", start: "2026-04-09", end: "2026-06-02", phaseId: 179},
+    {id: 188, name: "Configuración estándar", start: "2026-04-09", end: "2026-06-02", phaseId: 179},
     {id: 204, name: "Configuración y validación de escenarios", start: "2026-04-24", end: "2026-06-18", phaseId: 179},
     {id: 219, name: "Desarrollo de personalizaciones", start: "2026-06-03", end: "2026-08-06", phaseId: 179},
     {id: 225, name: "Desarrollo de Integraciones", start: "2026-06-03", end: "2026-08-06", phaseId: 179},
@@ -219,4 +219,5 @@ Fin: ${end}`;
             if (!r.querySelector('.phase')) r.style.display = "none";
         });
     });
+
 });
