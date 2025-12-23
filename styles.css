@@ -1,0 +1,217 @@
+/* styles.css - Gantt con cabecera fija al scroll vertical y horizontal */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 30px;
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+h1 small {
+    display: block;
+    font-size: 16px;
+    color: #666;
+    margin-top: 8px;
+}
+
+.gantt-container {
+    overflow-x: auto;
+    overflow-y: auto; /* Permite scroll vertical si hay muchas filas */
+    max-height: 80vh; /* Opcional: limita altura para forzar scroll vertical */
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 3200px;
+    font-size: 14px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+    position: relative;
+}
+
+/* Cabecera fija al scroll VERTICAL y horizontal */
+th {
+    background-color: #f1f3f5;
+    font-weight: 600;
+    color: #495057;
+    position: sticky;
+    top: 0; /* Fija arriba al scroll vertical */
+    z-index: 50; /* Encima de todo */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.month-header, .timeline-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: #f1f3f5 !important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* Celda "Tarea" en cabecera también fija */
+th.task-name {
+    left: 0;
+    z-index: 60 !important;
+    box-shadow: 8px 3px 6px -4px rgba(0,0,0,0.3);
+}
+
+/* Columna de tareas en filas de datos (fija al scroll horizontal) */
+.task-name {
+    width: 380px;
+    min-width: 380px;
+    position: sticky;
+    left: 0;
+    z-index: 40 !important;
+    font-size: 14px;
+    box-shadow: 8px 0 16px -4px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+}
+
+.task-name.phase {
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+}
+
+.task-name.phase:hover {
+    opacity: 0.9;
+}
+
+tr[data-phase-id]:not([data-phase-id="1"]) .task-name {
+    padding-left: 35px;
+}
+
+/* Contenedor para barras solapadas */
+.bar-container {
+    position: absolute;
+    top: 0;
+    left: 380px;
+    width: calc(100% - 380px);
+    height: 50px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Celdas del timeline */
+.timeline-cell {
+    height: 50px;
+    background: inherit;
+    position: relative;
+}
+
+/* Líneas verticales delgadas */
+.timeline-cell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background-color: #bbb;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.timeline-cell:last-child::after {
+    display: none;
+}
+
+/* Barras */
+.gantt-bar {
+    position: absolute;
+    top: 9px;
+    height: 32px;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    z-index: 5;
+}
+
+.gantt-bar.phase {
+    height: 40px !important;
+    top: 5px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 6;
+}
+
+.gantt-bar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+}
+
+.gantt-bar.milestone {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 4px !important;
+    transform: rotate(45deg) !important;
+    top: 15px !important;
+}
+
+.gantt-bar.milestone:hover {
+    transform: rotate(45deg) scale(1.2) !important;
+}
+
+/* Indicador colapso */
+.toggle-indicator {
+    margin-right: 8px;
+    font-weight: bold;
+    user-select: none;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.toggle-indicator:hover {
+    transform: scale(1.1);
+}
+
+.timeline-header {
+    text-align: center;
+    font-size: 13px;
+    background-color: #e9ecef;
+}
+
+.month-header {
+    font-weight: 700;
+    color: #1e40af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 1200px) {
+    .task-name {
+        width: 300px;
+        min-width: 300px;
+    }
+    tr[data-phase-id]:not([data-phase-id="1"]) .task-name {
+        padding-left: 25px;
+    }
+}
