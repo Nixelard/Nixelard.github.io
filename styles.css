@@ -1,4 +1,4 @@
-/* styles.css - Diagrama de Gantt final y profesional */
+/* styles.css - Gantt con cabecera fija al scroll vertical y horizontal */
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,8 +24,8 @@ h1 small {
 
 .gantt-container {
     overflow-x: auto;
-    overflow-y: auto;
-    max-height: 80vh;
+    overflow-y: auto; /* Permite scroll vertical si hay muchas filas */
+    max-height: 80vh; /* Opcional: limita altura para forzar scroll vertical */
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -49,14 +49,14 @@ th, td {
     position: relative;
 }
 
-/* Cabecera fija al scroll vertical y horizontal */
+/* Cabecera fija al scroll VERTICAL y horizontal */
 th {
     background-color: #f1f3f5;
     font-weight: 600;
     color: #495057;
     position: sticky;
-    top: 0;
-    z-index: 50;
+    top: 0; /* Fija arriba al scroll vertical */
+    z-index: 50; /* Encima de todo */
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
@@ -68,13 +68,14 @@ th {
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
+/* Celda "Tarea" en cabecera también fija */
 th.task-name {
     left: 0;
     z-index: 60 !important;
     box-shadow: 8px 3px 6px -4px rgba(0,0,0,0.3);
 }
 
-/* Columna de tareas fija y opaca */
+/* Columna de tareas en filas de datos (fija al scroll horizontal) */
 .task-name {
     width: 380px;
     min-width: 380px;
@@ -110,6 +111,9 @@ tr[data-phase-id]:not([data-phase-id="1"]) .task-name {
     pointer-events: none;
     z-index: 5;
 }
+.gantt-bar {
+    pointer-events: auto; /* 👈 ESTA ES LA CLAVE */
+}
 
 /* Celdas del timeline */
 .timeline-cell {
@@ -118,7 +122,7 @@ tr[data-phase-id]:not([data-phase-id="1"]) .task-name {
     position: relative;
 }
 
-/* Líneas verticales delgadas y visibles encima de barras */
+/* Líneas verticales delgadas */
 .timeline-cell::after {
     content: '';
     position: absolute;
@@ -173,7 +177,7 @@ tr[data-phase-id]:not([data-phase-id="1"]) .task-name {
     transform: rotate(45deg) scale(1.2) !important;
 }
 
-/* Indicador de colapso */
+/* Indicador colapso */
 .toggle-indicator {
     margin-right: 8px;
     font-weight: bold;
