@@ -1,4 +1,4 @@
-// script.js - Actualizado con nuevos nombres, fechas, % avance y % esperado (resto igual)
+// script.js - Timeline inicia en noviembre 2025, barras continuas solapadas, cabecera fija
 
 const tasks = [
     {id: 1, name: "Proyecto SDS Implementación ERP Oracle Fusion", start: "2025-11-28", end: "2027-02-25", phase: true, progress: 9, expected: 10},
@@ -49,9 +49,9 @@ const tasks = [
     {id: 345, name: "Entregables", start: "2027-02-23", end: "2027-02-25", phaseId: 332, progress: 0, expected: 0}
 ];
 
-// Timeline inicia en noviembre 2025
-const startDate = new Date("2025-10-01");
-const endDate = new Date("2027-03-01"); // Margen para febrero 2027
+// 🔧 CORRECCIÓN: fecha en hora local (noviembre = mes 10)
+const startDate = new Date(2025, 10, 1);
+const endDate = new Date("2027-03-01");
 
 function generateTimelineHeaders() {
     let current = new Date(startDate);
@@ -200,11 +200,11 @@ document.addEventListener("DOMContentLoaded", () => {
             bar.style.width = `${widthPercent}%`;
 
             const durationDays = (new Date(task.end) - new Date(task.start)) / (1000 * 60 * 60 * 24);
-            if (durationDays <= 1) {
+            if (durationDays <= 0) {
                 bar.classList.add("milestone");
-                bar.title = `${task.name} - ${task.start}`;
+                bar.title = `Inicio: ${task.start}\nFin: ${task.end}\nAvance: ${task.progress}%`;
             } else {
-                bar.title = `${task.start} → ${task.end}`;
+                bar.title = `Inicio: ${task.start}\nFin: ${task.end}\nAvance: ${task.progress}%`;
             }
 
             barContainer.appendChild(bar);
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tasks.forEach(task => table.appendChild(createTaskRow(task)));
 
-    // Colapsar fases al inicio (excepto proyecto general)
+    // Colapsar fases al inicio
     tasks.filter(t => t.phase && t.id !== 1).forEach(phase => {
         collapsedPhases.add(phase.id);
         document.querySelectorAll(`tr[data-phase-id="${phase.id}"]`).forEach(r => {
